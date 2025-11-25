@@ -7,10 +7,6 @@ jobs:
     runs-on: macos-latest # Выбираем виртуальную машину macOS
     
     steps:
-    - name: Clean up and Run PyInstaller
-      run: |
-        rm -rf dist/ build/ # Удаляем старые папки
-        pyinstaller --onefile --name "AntiSleep" mouse_mover.py
         
     - name: Checkout Code
       uses: actions/checkout@v4 # Скачиваем код из репозитория
@@ -27,6 +23,10 @@ jobs:
         
     - name: Run PyInstaller
       run: |
+        # 1. Очищаем старые сборки
+        rm -rf dist/ build/ 
+        
+        # 2. Запускаем сборку
         pyinstaller --onefile --name "AntiSleep" mouse_mover.py
         
     - name: Upload Artifact
