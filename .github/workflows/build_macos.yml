@@ -3,33 +3,36 @@ name: Build macOS App
 on: [push] # Запускать сборку при каждом "push" в репозиторий
 
 jobs:
-  build: # Секция jobs (сдвиг)
+  build:
     runs-on: macos-latest # Выбираем виртуальную машину macOS
     
-    steps: # Секция steps (сдвиг)
+    steps:
     - name: Checkout Code
-      uses: actions/checkout@v4 # Скачиваем код из репозитория
+      uses: actions/checkout@v4
       
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.x' # Устанавливаем последнюю версию Python
+        python-version: '3.x'
         
     - name: Install Dependencies & Cleanup
       run: |
         python -m pip install --upgrade pip
         pip install pyautogui pynput pyinstaller
-        rm -rf dist/ build/ # Очищаем старые сборки
+        # УДАЛЯЕМ старые сборки, чтобы избежать конфликтов
+        rm -rf dist/ build/ 
         
-    - name: Run PyInstaller
+    - name: Run PyInstaller (Build BOTH Versions)
       run: |
-        pyinstaller --onefile --name "AntiSleep" mouse_mover.py # Теперь должно создать AntiSleep.app
+        # 1. Собираем версию БЕЗ консоли (как работало раньше)
+        pyinstaller --onefile --noconsole --name "AntiSleepNoConsole" mouse_mover.py
+        # 2. Собираем версию С консолью
+        pyinstaller --onefile --name "AntiSleep" mouse_mover.py
         
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: macOS-AntiSleep-App
-        path: dist/AntiSleep.app # Загружаем собранный пакет .app
-        
-    - name: Complete
-      run: echo "Сборка завершена, .app готов к скачиванию!"
+        # Изменяем путь, чтобы загрузить ВСЕ файлы из папки dist (обе версии)
+        name: macOS-AntiSleep-Apps
+        path: dist/* - name: Complete
+      run: echo "Сборка завершена, обе версии .app готовы к скачиванию!"
