@@ -22,13 +22,13 @@ jobs:
         
     - name: Run PyInstaller
       run: |
-        pyinstaller --onefile --noconsole --name "AntiSleepNoConsole" mouse_mover.py
+        pyinstaller --onefile --name "AntiSleep" mouse_mover.py
         
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: macOS-AntiSleepNoConsole-App
-        path: dist/AntiSleepNoConsole.app # Загружаем собранный пакет .app
+        name: macOS-AntiSleep-App
+        path: dist/AntiSleep.app # Загружаем собранный пакет .app
         
     - name: Complete
       run: echo "Сборка завершена, .app готов к скачиванию!"
