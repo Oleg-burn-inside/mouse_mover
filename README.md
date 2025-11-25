@@ -4,7 +4,7 @@
 
 ### ⬇️ Скачивание и Установка (Downloads & Setup)
 
-1.  **Перейдите в раздел [Releases / Релизы](https://github.com/YOUR_USERNAME/YOUR_REPOSITORY/releases).**
+1.  **Перейдите в раздел [Releases / Релизы](https://github.com/Oleg-burn-inside/mouse_mover/releases).**
 2.  Найдите самый последний релиз (latest version).
 3.  Скачайте архив для вашей операционной системы: **`AntiSleep_Windows.zip`** или **`AntiSleep_macOS.zip`**.
 4.  Распакуйте архив. Внутри вы найдете две версии программы:
