@@ -3,11 +3,10 @@ name: Build macOS App
 on: [push] # Запускать сборку при каждом "push" в репозиторий
 
 jobs:
-  build:
+  build: # Секция jobs (сдвиг)
     runs-on: macos-latest # Выбираем виртуальную машину macOS
     
-    steps:
-        
+    steps: # Секция steps (сдвиг)
     - name: Checkout Code
       uses: actions/checkout@v4 # Скачиваем код из репозитория
       
@@ -16,18 +15,15 @@ jobs:
       with:
         python-version: '3.x' # Устанавливаем последнюю версию Python
         
-    - name: Install Dependencies
+    - name: Install Dependencies & Cleanup
       run: |
         python -m pip install --upgrade pip
         pip install pyautogui pynput pyinstaller
+        rm -rf dist/ build/ # Очищаем старые сборки
         
     - name: Run PyInstaller
       run: |
-        # 1. Очищаем старые сборки
-        rm -rf dist/ build/ 
-        
-        # 2. Запускаем сборку
-        pyinstaller --onefile --name "AntiSleep" mouse_mover.py
+        pyinstaller --onefile --name "AntiSleep" mouse_mover.py # Теперь должно создать AntiSleep.app
         
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
